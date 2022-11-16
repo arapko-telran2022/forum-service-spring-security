@@ -24,8 +24,8 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 		.regexMatchers(HttpMethod.DELETE, "/account/user/\\w+/role/\\w+/?").access("hasRole('ADMINISTRATOR')")
-		.regexMatchers(HttpMethod.PUT, "/account/user/\\w+/role/\\w+/?").hasAuthority("ADMINISTRATOR")
-		.regexMatchers(HttpMethod.DELETE, "/forum/post/\\w+/?").hasAnyAuthority("MODERATAOR", "ADMINISTRATOR");
+		.regexMatchers(HttpMethod.PUT, "/account/user/\\w+/role/\\w+/?").hasRole("ADMINISTRATOR")
+		.regexMatchers(HttpMethod.DELETE, "/forum/post/\\w+/?").hasAnyRole("MODERATAOR", "ADMINISTRATOR");
 		
 		http.authorizeRequests().anyRequest().authenticated();
 		
