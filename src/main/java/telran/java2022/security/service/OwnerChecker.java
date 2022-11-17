@@ -11,9 +11,9 @@ import telran.java2022.post.model.Post;
 @RequiredArgsConstructor
 public class OwnerChecker {
 	
-    private final PostRepository postRepository;;
+    private final PostRepository postRepository;
 
-    public Boolean checkUserOwner(Authentication authentication, String id) {
+    public Boolean checkPostOwner(Authentication authentication, String id) {
 		Post post = postRepository.findById(id).get();
 		if (post == null) {
 			return false;
@@ -21,7 +21,7 @@ public class OwnerChecker {
 		return authentication.getName().equals(post.getAuthor());
 	}
 
-	public Boolean checkPostOwner(Authentication authentication, String user) {
+	public Boolean checkUserOwner(Authentication authentication, String user) {
 	    return authentication.getName().equals(user);
 	}
 }
