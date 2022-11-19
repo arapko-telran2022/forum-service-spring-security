@@ -1,5 +1,6 @@
 package telran.java2022.accounting.model;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Getter
 @EqualsAndHashCode(of = {"login"})
 @Document(collection = "user")
+
 public class UserAccount {
 	@Id
 	String login;
@@ -23,12 +25,16 @@ public class UserAccount {
 	@Setter
 	String lastName;
 	Set<String> roles;
-
+	@Setter
+	Integer expirePassworddDays = 60;
+	@Setter
+	LocalDate expirePassworddDate = LocalDate.now().plusDays(expirePassworddDays);
+	
 	public UserAccount() {
 		roles = new HashSet<>();
 		roles.add("USER");
 	}
-
+	
 	public UserAccount(String login, String password, String firstName, String lastName) {
 		this();
 		this.login = login;

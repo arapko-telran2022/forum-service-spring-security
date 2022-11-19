@@ -1,5 +1,6 @@
 package telran.java2022.accounting.dto;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import lombok.AllArgsConstructor;
@@ -20,4 +21,5 @@ public class UserAccountResponseDto {
 	String lastName;
 	@Singular
 	Set<String> roles;
+	LocalDate expirePassworddDate;
 }
