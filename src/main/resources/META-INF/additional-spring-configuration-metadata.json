@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "password.expirePassworddDays",
+  "type": "java.lang.Integer",
+  "description": "Password validation period"
+}]}

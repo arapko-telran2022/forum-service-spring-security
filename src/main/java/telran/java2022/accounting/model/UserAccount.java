@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +17,7 @@ import lombok.Setter;
 @Getter
 @EqualsAndHashCode(of = {"login"})
 @Document(collection = "user")
-
+@ManagedResource
 public class UserAccount {
 	@Id
 	String login;
@@ -24,9 +27,12 @@ public class UserAccount {
 	String firstName;
 	@Setter
 	String lastName;
-	Set<String> roles;
 	@Setter
-	Integer expirePassworddDays = 60;
+	Set<String> roles;
+	
+	@Value("${password.expirePassworddDays:30}")
+	Integer expirePassworddDays;
+	
 	@Setter
 	LocalDate expirePassworddDate = LocalDate.now().plusDays(expirePassworddDays);
 	
@@ -49,6 +55,11 @@ public class UserAccount {
 
 	public boolean removeRole(String role) {
 		return roles.remove(role);
+	}
+	
+	@ManagedAttribute
+	public void setExpirePassworddDays(Integer expirePassworddDays) {
+		this.expirePassworddDays = expirePassworddDays;
 	}
 
 }
