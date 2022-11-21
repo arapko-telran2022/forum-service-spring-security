@@ -7,7 +7,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
+import org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.header.HeaderWriterFilter;
+import org.springframework.security.web.savedrequest.RequestCacheAwareFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +37,20 @@ public class AuthorizationConfiguration {
 		http.httpBasic();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//		http.addFilterAfter(expiredPasswordFilter, SecurityContextPersistenceFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, HeaderWriterFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, CsrfFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, LogoutFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, UsernamePasswordAuthenticationFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, DefaultLoginPageGeneratingFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, DefaultLogoutPageGeneratingFilter.class);
 		http.addFilterAfter(expiredPasswordFilter, BasicAuthenticationFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, RequestCacheAwareFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, SecurityContextHolderAwareRequestFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, AnonymousAuthenticationFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, SessionManagementFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, ExceptionTranslationFilter.class);
+//		http.addFilterAfter(expiredPasswordFilter, FilterSecurityInterceptor.class);
 		
 		http.authorizeRequests(authorize -> authorize
 				.mvcMatchers("/account/register/**", "/forum/posts/**").permitAll()

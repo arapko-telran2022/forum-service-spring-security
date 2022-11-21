@@ -10,13 +10,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @EqualsAndHashCode(of = {"login"})
 @Document(collection = "user")
+@AllArgsConstructor
+@Getter
 @ManagedResource
 public class UserAccount {
 	@Id
@@ -30,11 +32,12 @@ public class UserAccount {
 	@Setter
 	Set<String> roles;
 	
-	@Value("${password.expirePassworddDays:30}")
-	Integer expirePassworddDays;
+	@Setter
+//	@Value("${password.expirePassworddDays:30}")
+	Integer expirePassworddDays = 60;
 	
 	@Setter
-	LocalDate expirePassworddDate = LocalDate.now().plusDays(expirePassworddDays);
+	LocalDate expirePassworddDate = LocalDate.now().plusDays(this.expirePassworddDays);
 	
 	public UserAccount() {
 		roles = new HashSet<>();
