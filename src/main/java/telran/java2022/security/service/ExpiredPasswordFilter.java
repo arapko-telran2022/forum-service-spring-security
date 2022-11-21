@@ -33,7 +33,8 @@ public class ExpiredPasswordFilter extends GenericFilterBean {
 //		if (principal != null && checkEndPoint(request.getMethod(), request.getServletPath())) {
 		if (authentication != null && checkEndPoint(request.getMethod(), request.getServletPath())) {
 			UserProfile user = (UserProfile) authentication.getPrincipal();
-			if (!user.isPasswordNotExpired()) {
+			Long count = user.getAuthorities().stream().filter(el-> el.toString().equals("ROLE_CHANGE")).count();
+			if (!user.isPasswordNotExpired() || count > 0) {
 				response.sendError(403, "User [" + user.getUsername() + "] password expired");
 				System.out.println(
 						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS").format(LocalDateTime.now()) + 
@@ -46,7 +47,11 @@ public class ExpiredPasswordFilter extends GenericFilterBean {
 	}
 
 	private boolean checkEndPoint(String method, String path) {
-		return !("Put".equalsIgnoreCase(method) && path.matches("/account/password/?"));
+		return !(
+				("Put".equalsIgnoreCase(method) && path.matches("/account/password/?")) 
+				|| path.matches("/account/register/?") 
+				|| path.matches("/forum/posts/?")
+				);
 	}
 
 }

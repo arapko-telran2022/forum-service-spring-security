@@ -1,6 +1,7 @@
 package telran.java2022.security.service;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -22,19 +23,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserAccount userAccount = userAccountRepository.findById(username).orElseThrow(()-> new UsernameNotFoundException(username));
-		String[] roles = userAccount.getRoles()
-				.stream()
-				.map(r->"ROLE_"+r.toUpperCase())
-				.toArray(String[]:: new);
+		
 	
 //		Boolean enabled = true; 
 //		Boolean accountNonExpired = true;
 //		Boolean credentialsNonExpired = userAccount.getExpirePassworddDate().isAfter(LocalDate.now()); 
 //		Boolean accountNonLocked = true;
-//		return new User(username, userAccount.getPassword(), 
-//				enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, AuthorityUtils.createAuthorityList(roles));
+		
+		boolean passwordNonExpired = userAccount.getExpirePassworddDate().isAfter(LocalDate.now());		
+		Set<String> rolesSet = userAccount.getRoles();
+		
+		if(!passwordNonExpired) {
+			rolesSet.add("CHANGE");
+		}
+		String[] roles = rolesSet
+				.stream()
+				.map(r->"ROLE_"+r.toUpperCase())
+				.toArray(String[]:: new);
 //		return new User(username, userAccount.getPassword(), AuthorityUtils.createAuthorityList(roles));
-		boolean passwordNonExpired = userAccount.getExpirePassworddDate().isAfter(LocalDate.now());
+//		return new User(username, userAccount.getPassword(), 
+//				enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, AuthorityUtils.createAuthorityList(roles));		
 		return new UserProfile(username, userAccount.getPassword(), 
 				AuthorityUtils.createAuthorityList(roles), passwordNonExpired);
 	}
