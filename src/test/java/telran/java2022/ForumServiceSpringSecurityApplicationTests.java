@@ -16,7 +16,8 @@ import telran.java2022.accounting.model.UserAccount;
 import telran.java2022.accounting.service.UserAccountService;
 
 @SpringBootTest
-@TestPropertySource(properties = {"spring.data.mongodb.uri=mongodb+srv://root:root@clusterjava2022.2nt2aqt.mongodb.net/test_telran?retryWrites=true&w=majority"})
+@TestPropertySource(properties = {
+		"spring.data.mongodb.uri=mongodb+srv://root:root@clusterjava2022.2nt2aqt.mongodb.net/test_telran?retryWrites=true&w=majority" })
 //@AutoConfigureMockMvc
 class ForumServiceSpringSecurityApplicationTests {
 
@@ -28,20 +29,20 @@ class ForumServiceSpringSecurityApplicationTests {
 
 	@Test
 	void testAddUser() {
-		
+
 		try {
 			UserAccount user = new UserAccount("JavaFan", "1234", "Java", "Fan");
-			
+
 			UserAccount expected = user;
 
 			UserRegisterDto userRegisterDto = modelMapper.map(user, UserRegisterDto.class);
 
 			UserAccountResponseDto actual = userAccountService.addUser(userRegisterDto);
-			
+
 			assertEquals(expected.getLogin(), actual.getLogin());
 
 		} catch (Exception e) {
-			System.out.println("Errore message: "+ e.getMessage());
+			System.out.println("Errore message: " + e.getMessage());
 			assertTrue(true);
 		}
 
