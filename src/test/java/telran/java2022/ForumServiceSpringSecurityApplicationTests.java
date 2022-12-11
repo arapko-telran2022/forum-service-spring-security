@@ -41,7 +41,7 @@ class ForumServiceSpringSecurityApplicationTests {
 			assertEquals(expected.getLogin(), actual.getLogin());
 
 		} catch (Exception e) {
-			System.out.println("Can't add exist User");
+			System.out.println("Errore message: "+ e.getMessage());
 			assertTrue(true);
 		}
 
