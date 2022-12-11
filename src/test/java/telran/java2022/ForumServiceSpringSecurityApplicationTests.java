@@ -32,13 +32,11 @@ class ForumServiceSpringSecurityApplicationTests {
 		try {
 			UserAccount user = new UserAccount("JavaFan", "1234", "Java", "Fan");
 
-			UserAccount expected = user;
-
 			UserRegisterDto userRegisterDto = modelMapper.map(user, UserRegisterDto.class);
 
 			UserAccountResponseDto actual = userAccountService.addUser(userRegisterDto);
 
-			assertEquals(expected.getLogin(), actual.getLogin());
+			assertEquals(user.getLogin(), actual.getLogin());
 
 		} catch (Exception e) {
 			System.out.println("Errore message: " + e.getMessage());
