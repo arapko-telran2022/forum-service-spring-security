@@ -6,7 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.RequiredArgsConstructor;
 import telran.java2022.accounting.dao.UserAccountRepository;
