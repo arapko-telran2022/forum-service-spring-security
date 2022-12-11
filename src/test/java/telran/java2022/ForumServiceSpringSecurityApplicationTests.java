@@ -40,7 +40,6 @@ class ForumServiceSpringSecurityApplicationTests {
 
 		} catch (Exception e) {
 			System.out.println("Errore message: " + e.getMessage());
-			assertTrue(true);
 		}
 
 	}
